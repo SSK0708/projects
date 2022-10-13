@@ -1,5 +1,6 @@
-#include <LiquidCrystal.h>
-LiquidCrystal lcd(7, 6, 5, 4, 3, 2);
+#include <LiquidCrystal_I2C.h>
+LiquidCrystal_I2C lcd(0x27, 16, 2); // I2C address 0x27, 16 column and 2 rows
+
 int X;
 int Y;
 float TIME = 0;
@@ -11,12 +12,13 @@ const int input = A0;
 void setup()
 {
 Serial.begin(9600);
-lcd.begin(16, 2);
+lcd.begin();
+lcd.backlight();
 lcd.clear();
 lcd.setCursor(0,0);
-lcd.print(“Water Flow Meter”);
+lcd.print("Water Flow Meter");
 lcd.setCursor(0,1);
-lcd.print(“****************”);
+lcd.print("****************");
 delay(2000);
 pinMode(input,INPUT);
 }
@@ -34,11 +36,11 @@ if(isinf(FREQUENCY))
 {
 lcd.clear();
 lcd.setCursor(0,0);
-lcd.print(“VOL. :0.00”);
+lcd.print("VOL. :0.00");
 lcd.setCursor(0,1);
-lcd.print(“TOTAL:”);
+lcd.print("TOTAL:");
 lcd.print( TOTAL);
-lcd.print(” L”);
+lcd.print(" L");
 }
 else
 {
@@ -46,13 +48,13 @@ TOTAL = TOTAL + LS;
 Serial.println(FREQUENCY);
 lcd.clear();
 lcd.setCursor(0,0);
-lcd.print(“VOL.: “);
+lcd.print("VOL.: ");
 lcd.print(WATER);
-lcd.print(” L/M”);
+lcd.print("L/M");
 lcd.setCursor(0,1);
-lcd.print(“TOTAL:”);
 lcd.print("TOTAL:");
-lcd.print(”L/M”);
+lcd.print("TOTAL:");
+lcd.print( "L");
 }
 }
 delay(1000);
